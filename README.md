@@ -1,4 +1,5 @@
 # GestaoEscolar
+Link para o chat: https://gemini.google.com/share/6e6fb0cb73ab
 
 # Abstract Factory
 
@@ -79,5 +80,10 @@ Aqui está como a árvore de diretórios do seu projeto ficaria (assumindo uma e
                 `-- demo/  <-- Pacote para a demonstração
                     |
                     `-- Demo.java  [Classe Principal com o menu]
+
+5. Integração com o Menu Principal
+Como você mencionou no seu plano, a melhor forma de demonstrar é com um menu interativo no console.
+A classe DemoAbstractFactory que eu criei antes era apenas para fins de teste. Agora, vamos integrar essa lógica dentro da sua classe Demo (ou Main) principal, como uma das opções do menu.
+Aqui está o código da sua classe Demo.java (ou Main.java), agora com a opção "1" funcional:
 
 # 
