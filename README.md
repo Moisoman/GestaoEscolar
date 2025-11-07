@@ -86,4 +86,65 @@ Como você mencionou no seu plano, a melhor forma de demonstrar é com um menu i
 A classe DemoAbstractFactory que eu criei antes era apenas para fins de teste. Agora, vamos integrar essa lógica dentro da sua classe Demo (ou Main) principal, como uma das opções do menu.
 Aqui está o código da sua classe Demo.java (ou Main.java), agora com a opção "1" funcional:
 
-# 
+# Builder
+
+Vamos aplicar o Builder na  Gestão de Turmas. O objetivo é "construir a configuração de uma turma (disciplinas, horários, número de alunos) de maneira flexível".
+
+Este padrão é ideal para objetos que têm muitos parâmetros de configuração, alguns obrigatórios e muitos opcionais.
+
+1. Padrão: Builder (Construtor)
+Nome: Builder
+.
+Propósito: Separar o processo de construção de um objeto complexo de sua representação final. Isso permite que o mesmo processo de construção possa criar diferentes representações. Em Java, é mais conhecido por permitir a criação de objetos complexos passo a passo, de forma legível e garantindo um estado final válido.
+
+2. Motivação (Problema / Solução)
+Problema (Contexto: Gestão Escolar): Imagine criar um objeto Turma. Uma turma tem atributos:
+:
+Obrigatórios: nomeDaTurma (ex: "MAT101"), anoLetivo (ex: 2024).
+.
+Opcionais: professorTitular, sala, listaDeAlunos, listaDeDisciplinas, turno (Manhã/Tarde/Noite).
+.
+Como você cria uma instância de Turma?
+.
+Construtor "Telescópico"? Você teria que criar múltiplos construtores: Turma(nome, ano) Turma(nome, ano, professor) Turma(nome, ano, professor, sala) Turma(nome, ano, professor, sala, turno) ... isso é impraticável, ilegível e propenso a erros (inverter a ordem de sala e turno, por exemplo).
+.
+Construtor Padrão + Setters? Turma t = new Turma(); t.setNome("MAT101"); t.setAnoLetivo(2024); t.setProfessor(profJoao); ... O problema aqui é: o que acontece se o programador esquecer de chamar setNome()? E se o objeto Turma for usado antes de estar completo? O objeto pode existir em um estado inválido por um tempo.
+.
+Solução (Usando Builder): Criamos uma classe interna (normalmente estática) chamada TurmaBuilder.
+.
+O cliente obtém uma instância do Builder, passando os parâmetros obrigatórios no construtor do builder (ex: new TurmaBuilder("MAT101", 2024)).
+.
+O cliente usa métodos fluentes (que retornam this) para configurar os parâmetros opcionais (ex: .comProfessor(profJoao).comSala("B-102")).
+.
+No final, o cliente chama o método build().
+.
+O método build() (dentro do TurmaBuilder) executa validações (ex: "a turma tem pelo menos uma disciplina?") e, se tudo estiver OK, ele chama o construtor privado da classe Turma, passando a si mesmo (this) como argumento.
+.
+Isso garante que o objeto Turma só é instanciado em um estado completo e válido, e a leitura do código de criação fica limpa e explícita.
+
+3. Estrutura (Diagrama UML)
+Para esta implementação (o "Modern Java Builder"), a estrutura é:
+.
+Product (Turma):
+.
+A classe complexa que queremos criar
+.
+Possui um construtor privado que aceita um TurmaBuilder como argumento.
+.
+Geralmente é imutável (seus atributos são final).
+.
+Builder (TurmaBuilder):
+.
+Uma classe estática aninhada (nested static class) dentro de Turma.
+.
+Possui os mesmos atributos da Turma, mas mutáveis.
+.
+Tem um construtor público para os campos obrigatórios.
+.
+Tem métodos fluentes (ex: comSala(...)) para os campos opcionais.
+.
+Tem o método build() que chama o construtor privado de Turma e retorna a instância do produto.
+.
+Client (Demo):
+.
+A classe que utiliza o TurmaBuilder para criar uma Turma.

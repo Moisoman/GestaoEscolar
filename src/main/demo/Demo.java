@@ -1,12 +1,13 @@
 
 // Pacote: gestaoescolar.demo
-package main.demo;
+package demo;
 
 // Importações necessárias
 import factory.HistoriaFactory;
 import factory.MatematicaFactory;
 import factory.MaterialDidaticoFactory;
 import produtos.Apostila;
+import turmas.TurmasBuilder;
 import produtos.AplicativoOnline;
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class Demo {
         while (true) {
             System.out.println("\n--- Sistema de Gestão Escolar (Demo Padrões) ---");
             System.out.println("1 - Demonstrar Abstract Factory (Montar Kit Didático)");
-            System.out.println("2 - Demonstrar Builder (Configurar Turma) - [Pendente]");
+            System.out.println("2 - Demonstrar Builder (Configurar Turma)");
             System.out.println("3 - ... (outros padrões)");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
@@ -42,7 +43,8 @@ public class Demo {
                     demonstrarAbstractFactory(scanner);
                     break;
                 case 2:
-                    System.out.println("Padrão Builder ainda não implementado.");
+                    // Chama o método que demonstra o Builder
+                    demonstrarBuilder();
                     break;
                 // ... cases para os outros 22 padrões
                 case 0:
@@ -91,5 +93,52 @@ public class Demo {
         System.out.println("Apostila: " + apostila.getTitulo());
         System.out.println("Aplicativo: " + aplicativo.getNome() + " (Acessar em: " + aplicativo.getUrlAcesso() + ")");
         System.out.println("---------------------------------");
+    }
+
+    /**
+     * Método estático para demonstrar o padrão Builder.
+     * Ele é o "Cliente" do padrão.
+     */
+    private static void demonstrarBuilder() {
+        System.out.println("\n### Demonstração: Builder ###");
+        System.out.println("Criando duas turmas com configurações complexas...");
+
+        // --- Cenário 1: Turma de TI (completa) ---
+        // O cliente usa a interface fluente do Builder
+        System.out.println("\nConstruindo Turma de TI (Completa)...");
+        TurmasBuilder turmaTI = new TurmasBuilder.TurmaBuilder("TADS-2024", 2024)
+                .comTurno("NOITE")
+                .comSala("C-301")
+                .comDisciplina("Programação Orientada a Objetos")
+                .comDisciplina("Banco de Dados I")
+                .comDisciplina("Engenharia de Software")
+                .build(); // O objeto Turma é criado aqui!
+        
+        System.out.println("Turma Criada: " + turmaTI.toString());
+
+        // --- Cenário 2: Turma de Pedagogia (mínima) ---
+        // Note que o cliente não precisa se preocupar com os campos nulos.
+        System.out.println("\nConstruindo Turma de Pedagogia (Mínima)...");
+        TurmasBuilder turmaPedagogia = new TurmasBuilder.TurmaBuilder("PED-2024", 2024)
+                .comTurno("MANHA")
+                // Sem sala definida intencionalmente
+                .comDisciplina("Didática Geral")
+                .build();
+
+        System.out.println("Turma Criada: " + turmaPedagogia.toString());
+
+        // --- Cenário 3: Tentativa de falha (Validação) ---
+        System.out.println("\nTentando construir Turma sem disciplina (Deve falhar)...");
+        try {
+            TurmasBuilder turmaFantasma = new TurmasBuilder.TurmaBuilder("FANTASMA-2024", 2024)
+                    .comTurno("NOITE")
+                    .comSala("A-100")
+                    .build(); // <- Esta linha vai lançar uma exceção
+            
+            System.out.println("ERRO: Turma fantasma foi criada! " + turmaFantasma.toString());
+        } catch (IllegalStateException e) {
+            System.out.println("SUCESSO: Falha ao construir turma, como esperado.");
+            System.out.println("Mensagem: " + e.getMessage());
+        }
     }
 }
