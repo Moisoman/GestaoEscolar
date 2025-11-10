@@ -10,6 +10,9 @@ import produtos.Apostila;
 import turmas.TurmasBuilder;
 import produtos.AplicativoOnline;
 import model.MaterialDidatico;
+import notas.AdaptadorDeNotasLegado;
+import notas.FonteDeNotas;
+import notas.ServicoDeBoletim;
 import repositorio.RegistroAlunos;
 
 import java.util.HashMap;
@@ -57,6 +60,7 @@ public class Demo {
             System.out.println("3 - Demonstrar Factory - Inativo");
             System.out.println("4 - Demonstrar Prototype (Clonar Material Didático)");
             System.out.println("5 - Demonstrar Singleton (Registro Central)");
+            System.out.println("6 - Demonstrar Adapter (Buscar Notas de Sistema Legado)");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -85,6 +89,9 @@ public class Demo {
                 case 5:
                     // Chama o método de demonstração do Singleton
                     demonstrarSingleton();
+                    break;
+                case 6:
+                    demonstrarAdapter(scanner);
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -242,5 +249,27 @@ public class Demo {
         RegistroAlunos r1 = RegistroAlunos.getInstance();
         RegistroAlunos r2 = RegistroAlunos.getInstance();
         System.out.println("\nProva de Hash: " + r1.hashCode() + " é igual a " + r2.hashCode());
+    }
+
+    /**
+     * Método estático para demonstrar o padrão Adapter.
+     */
+    private static void demonstrarAdapter(Scanner scanner) {
+        System.out.println("\n### Demonstração: Adapter ###");
+        System.out.println("Nosso novo 'ServicoDeBoletim' precisa de notas.");
+        System.out.println("Vamos usar um Adapter para buscar dados do sistema legado.");
+        System.out.print("Digite o ID do Aluno (ex: A123 ou B456): ");
+        String idAluno = scanner.nextLine();
+        
+        // 1. Criamos o Adapter
+        FonteDeNotas adaptador = new AdaptadorDeNotasLegado();
+        
+        // 2. Injetamos o Adapter no nosso Cliente.
+        // O Cliente (ServicoDeBoletim) acha que 'adaptador' é
+        // uma fonte de dados normal. Ele não sabe que é um tradutor.
+        ServicoDeBoletim servico = new ServicoDeBoletim(adaptador);
+        
+        // 3. O Cliente faz seu trabalho
+        servico.imprimirBoletim(idAluno);
     }
 }

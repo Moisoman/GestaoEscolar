@@ -181,3 +181,35 @@ Singleton (RegistroAlunos):
 + getInstance(): static RegistroAlunos (O método de acesso global).
 + adicionarAluno(String nome): void (Método de negócio).
 + listarAlunos(): void (Método de negócio).
+
+# Adapter
+Este é o primeiro padrão Estrutural da lista. Conforme seu plano, ele se encaixa na "3. Gestão de Notas e Avaliações" para "adaptar o formato das notas de um sistema antigo para o novo sistema".
+
+A função do Adapter é ser um "tradutor". Ele permite que duas interfaces incompatíveis trabalhem juntas.
+
+1. Padrão: Adapter (Adaptador)
+Nome: Adapter (ou Wrapper)
+Propósito: Converter a interface de uma classe (o "Adaptado") em outra interface que o cliente espera (o "Alvo"). O Adapter permite que classes com interfaces incompatíveis colaborem.
+
+2. Motivação (Problema / Solução)
+Problema (Contexto: Gestão Escolar): Seu novo Sistema de Gestão Escolar é moderno. Ele tem um ServicoDeBoletim que, para calcular a média, espera receber um array de notas em double[].
+No entanto, a escola ainda usa um sistema legado (SistemaDeNotasAntigo) que foi comprado de outra empresa. Este sistema antigo é uma "caixa preta" (não podemos alterá-lo) e ele retorna as notas em um formato totalmente diferente: um único Map<String, String>, onde a chave é o nome da matéria e o valor é a nota como String (ex: "P1", "8.5").
+O novo ServicoDeBoletim (Cliente) não sabe ler Map<String, String>. Ele espera double[]. Como fazer os dois conversarem sem "poluir" o código novo com lógica de conversão?
+Solução (Usando Adapter): Criamos uma classe "tradutora": AdaptadorDeNotasLegado.
+O Alvo (Target) que o cliente quer é a interface FonteDeNotas. Ela tem o método double[] getNotas(String idAluno).
+O Adaptado (Adaptee) é a classe SistemaDeNotasAntigo com o método Map<String, String> buscarNotasLegado(String idAluno).
+O AdaptadorDeNotasLegado implementa a interface FonteDeNotas (o que o cliente quer).
+Internamente, o AdaptadorDeNotasLegado contém uma instância do SistemaDeNotasAntigo.
+Quando o cliente chama adaptador.getNotas(), o adaptador, por baixo dos panos, executa a "tradução": a. Chama o sistemaAntigo.buscarNotasLegado(). b. Recebe o Map<String, String>. c. Itera sobre o mapa, converte as Strings em doubles. d. Coloca esses doubles em um double[]. e. Retorna o double[] para o cliente.
+O cliente (ServicoDeBoletim) fica feliz, pois recebeu os dados no formato que esperava, e não faz a menor ideia de que falou com um sistema legado.
+
+3. Estrutura (Diagrama UML)
+Target (FonteDeNotas): A interface que o nosso novo sistema (Cliente) entende e espera.
+Método: getNotas(String idAluno): double[]
+Client (ServicoDeBoletim): A classe do nosso novo sistema que usa a interface FonteDeNotas.
+Adaptee (SistemaDeNotasAntigo): A classe legada com a interface incompatível.
+Método: buscarNotasLegado(String idAluno): Map<String, String>
+Adapter (AdaptadorDeNotasLegado): A classe "tradutora".
+implements FonteDeNotas
+private SistemaDeNotasAntigo sistemaAntigo; (contém o adaptado)
+No método getNotas(), ele chama sistemaAntigo.buscarNotasLegado() e traduz o resultado.
