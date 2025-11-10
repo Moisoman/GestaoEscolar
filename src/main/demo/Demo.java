@@ -10,6 +10,8 @@ import produtos.Apostila;
 import turmas.TurmasBuilder;
 import produtos.AplicativoOnline;
 import model.MaterialDidatico;
+import repositorio.RegistroAlunos;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -54,6 +56,7 @@ public class Demo {
             System.out.println("2 - Demonstrar Builder (Configurar Turma)");
             System.out.println("3 - Demonstrar Factory - Inativo");
             System.out.println("4 - Demonstrar Prototype (Clonar Material Didático)");
+            System.out.println("5 - Demonstrar Singleton (Registro Central)");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -79,7 +82,10 @@ public class Demo {
                 case 4:
                     demonstrarPrototype(scanner);
                     break;
-
+                case 5:
+                    // Chama o método de demonstração do Singleton
+                    demonstrarSingleton();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     scanner.close();
@@ -206,5 +212,35 @@ public class Demo {
             System.out.println("SUCESSO: Falha ao construir turma, como esperado.");
             System.out.println("Mensagem: " + e.getMessage());
         }
+    }
+
+    // --- MÉTODO DE DEMONSTRAÇÃO DO SINGLETON (AUTOCONTIDO) ---
+
+    /**
+     * Método estático para demonstrar o padrão Singleton (VERSÃO STANDALONE).
+     * Este método é 100% autocontido e não depende da Opção 3.
+     */
+    private static void demonstrarSingleton() {
+        System.out.println("\n### Demonstração: Singleton (Standalone) ###");
+        
+        System.out.println("Acessando o registro central e adicionando 'Carlos'...");
+        // Pega a instância global e usa.
+        RegistroAlunos.getInstance().adicionarAluno("Carlos (adicionado na 1ª chamada)");
+
+        System.out.println("\nAcessando o registro NOVAMENTE e adicionando 'Ana'...");
+        // Pega a instância de novo (é a mesma) e usa.
+        RegistroAlunos.getInstance().adicionarAluno("Ana (adicionada na 2ª chamada)");
+
+        System.out.println("\n--- Prova de que o estado foi mantido ---");
+        System.out.println("Listando todos os alunos da MESMA instância:");
+        
+        // Pega a instância uma terceira vez e lista.
+        // Ele deve listar "Carlos" E "Ana", provando que o estado é global.
+        RegistroAlunos.getInstance().listarAlunos();
+
+        // Prova de que as instâncias são as mesmas (opcional, mas bom)
+        RegistroAlunos r1 = RegistroAlunos.getInstance();
+        RegistroAlunos r2 = RegistroAlunos.getInstance();
+        System.out.println("\nProva de Hash: " + r1.hashCode() + " é igual a " + r2.hashCode());
     }
 }

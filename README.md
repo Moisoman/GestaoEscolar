@@ -156,3 +156,28 @@ A classe que implementa Prototipo.
 Ela sabe como criar uma cópia de si mesma (geralmente usando um construtor de cópia privado).
 Client (Demo / PrototipoCache):
 A classe que precisa de um novo objeto e, em vez de usar new, usa o prototipo.clonar().
+
+# Singleton
+
+Sem qualquer dependência de outros padrões (como o Aluno do Factory Method).
+
+Aqui está tudo o que você precisa. Este exemplo demonstra o padrão de forma isolada, usando um RegistroAlunos que armazena uma lista simples de String (nomes).
+
+1. Padrão: Singleton (Instância Única)
+Nome: Singleton
+Propósito: Garantir que uma classe tenha somente uma instância em toda a aplicação e fornecer um ponto de acesso global a essa instância.
+
+2. Motivação (Problema / Solução)
+Problema (Contexto: Gestão Escolar): Seu sistema precisa de um local central para registrar todos os alunos matriculados. Se o "Módulo de Matrícula" criar sua própria lista (new RegistroAlunos()) e o "Módulo de Relatórios" criar outra (new RegistroAlunos()), eles estarão olhando para bancos de dados diferentes. O módulo de relatórios não verá os alunos que o módulo de matrícula acabou de adicionar. O estado do sistema se torna inconsistente.
+Solução (Usando Singleton): Forçamos todos os módulos do sistema a usar a exatamente mesma instância do RegistroAlunos. Fazemos isso:
+Tornando o construtor private (impedindo o new).
+Fornecendo um método public static getInstance() que sempre retorna a única instância que a própria classe criou.
+
+3. Estrutura (Diagrama UML)
+Singleton (RegistroAlunos):
+- instance: static final RegistroAlunos (O atributo estático que guarda a si mesmo).
+- nomesDosAlunos: List<String> (Os dados internos).
+- RegistroAlunos() (O construtor privado).
++ getInstance(): static RegistroAlunos (O método de acesso global).
++ adicionarAluno(String nome): void (Método de negócio).
++ listarAlunos(): void (Método de negócio).
