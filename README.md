@@ -94,57 +94,65 @@ Este padrão é ideal para objetos que têm muitos parâmetros de configuração
 
 1. Padrão: Builder (Construtor)
 Nome: Builder
-.
 Propósito: Separar o processo de construção de um objeto complexo de sua representação final. Isso permite que o mesmo processo de construção possa criar diferentes representações. Em Java, é mais conhecido por permitir a criação de objetos complexos passo a passo, de forma legível e garantindo um estado final válido.
 
 2. Motivação (Problema / Solução)
 Problema (Contexto: Gestão Escolar): Imagine criar um objeto Turma. Uma turma tem atributos:
-:
 Obrigatórios: nomeDaTurma (ex: "MAT101"), anoLetivo (ex: 2024).
-.
 Opcionais: professorTitular, sala, listaDeAlunos, listaDeDisciplinas, turno (Manhã/Tarde/Noite).
-.
 Como você cria uma instância de Turma?
-.
 Construtor "Telescópico"? Você teria que criar múltiplos construtores: Turma(nome, ano) Turma(nome, ano, professor) Turma(nome, ano, professor, sala) Turma(nome, ano, professor, sala, turno) ... isso é impraticável, ilegível e propenso a erros (inverter a ordem de sala e turno, por exemplo).
-.
 Construtor Padrão + Setters? Turma t = new Turma(); t.setNome("MAT101"); t.setAnoLetivo(2024); t.setProfessor(profJoao); ... O problema aqui é: o que acontece se o programador esquecer de chamar setNome()? E se o objeto Turma for usado antes de estar completo? O objeto pode existir em um estado inválido por um tempo.
-.
 Solução (Usando Builder): Criamos uma classe interna (normalmente estática) chamada TurmaBuilder.
-.
 O cliente obtém uma instância do Builder, passando os parâmetros obrigatórios no construtor do builder (ex: new TurmaBuilder("MAT101", 2024)).
-.
 O cliente usa métodos fluentes (que retornam this) para configurar os parâmetros opcionais (ex: .comProfessor(profJoao).comSala("B-102")).
-.
 No final, o cliente chama o método build().
-.
 O método build() (dentro do TurmaBuilder) executa validações (ex: "a turma tem pelo menos uma disciplina?") e, se tudo estiver OK, ele chama o construtor privado da classe Turma, passando a si mesmo (this) como argumento.
-.
 Isso garante que o objeto Turma só é instanciado em um estado completo e válido, e a leitura do código de criação fica limpa e explícita.
 
 3. Estrutura (Diagrama UML)
 Para esta implementação (o "Modern Java Builder"), a estrutura é:
-.
 Product (Turma):
-.
 A classe complexa que queremos criar
-.
 Possui um construtor privado que aceita um TurmaBuilder como argumento.
-.
 Geralmente é imutável (seus atributos são final).
-.
 Builder (TurmaBuilder):
-.
 Uma classe estática aninhada (nested static class) dentro de Turma.
-.
 Possui os mesmos atributos da Turma, mas mutáveis.
-.
 Tem um construtor público para os campos obrigatórios.
-.
 Tem métodos fluentes (ex: comSala(...)) para os campos opcionais.
-.
 Tem o método build() que chama o construtor privado de Turma e retorna a instância do produto.
-.
 Client (Demo):
-.
 A classe que utiliza o TurmaBuilder para criar uma Turma.
+
+# Prototype
+
+Este padrão se encaixa perfeitamente no seu plano, na "7. Gestão de Recursos", para "criar clones de turmas e materiais".
+
+O objetivo do Prototype é criar novos objetos copiando uma instância existente (um "protótipo"), em vez de criar o objeto "do zero". Isso é útil quando a criação de um objeto é cara ou complexa.
+
+1. Padrão: Prototype (Protótipo)
+Nome: Prototype
+Propósito: Especificar os tipos de objetos a serem criados usando uma instância-protótipo e criar novos objetos pela cópia (clonagem) desse protótipo.
+
+2. Motivação (Problema / Solução)
+Problema (Contexto: Gestão Escolar): Imagine que, no seu sistema, um objeto MaterialDidatico é muito "caro" para ser criado. Talvez, para ser montado, ele precise fazer 10 consultas ao banco de dados para carregar todos os tópicos, exercícios e referências.
+Agora, a Secretaria precisa criar o Material de Matemática para 2025. Esse material é 95% idêntico ao Material de Matemática de 2024, mudando apenas o ano e um ou dois tópicos novos.
+O código "ingênuo" criaria um novo objeto (new MaterialDidatico(...)) e executaria novamente as 10 consultas caras ao banco de dados, o que é um desperdício de tempo e recursos.
+Solução (Usando Prototype):
+Temos uma instância "mãe" já criada (o Material de Matemática de 2024), que chamamos de protótipo.
+Quando queremos o material de 2025, em vez de new, nós pedimos ao protótipo: material2025 = prototipoMatematica2024.clonar().
+Este método clonar() cria uma nova instância em memória e copia todos os atributos do protótipo (inclusive a lista de tópicos já carregada) para ela. Isso é quase instantâneo.
+Agora, só precisamos fazer as pequenas modificações: material2025.setAnoLetivo(2025); material2025.adicionarTopico("Novo Tópico de IA");
+Ganhamos performance, pois evitamos o processo de construção caro.
+
+3. Estrutura (Diagrama UML)
+A estrutura pode ser implementada de algumas formas em Java. A forma mais moderna e segura (que usaremos) é com um construtor de cópia e uma interface de clonagem.
+Prototype (Prototipo):
+Uma interface que criaremos, com um método clonar().
+(Alternativa: usar a interface Cloneable nativa do Java, mas ela tem suas complicações).
+ConcretePrototype (MaterialDidatico):
+A classe que implementa Prototipo.
+Ela sabe como criar uma cópia de si mesma (geralmente usando um construtor de cópia privado).
+Client (Demo / PrototipoCache):
+A classe que precisa de um novo objeto e, em vez de usar new, usa o prototipo.clonar().

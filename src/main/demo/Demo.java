@@ -9,6 +9,9 @@ import factory.MaterialDidaticoFactory;
 import produtos.Apostila;
 import turmas.TurmasBuilder;
 import produtos.AplicativoOnline;
+import model.MaterialDidatico;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -17,14 +20,40 @@ import java.util.Scanner;
  */
 public class Demo {
 
+    // Um "cache" para guardar nossos protótipos já criados
+    private static Map<String, MaterialDidatico> prototiposCache = new HashMap<>();
+
+    /**
+     * Método para carregar os protótipos "caros" uma única vez.
+     */
+    public static void carregarPrototipos() {
+        System.out.println("### Carregando protótipos base (só deve rodar 1 vez) ###");
+        
+        // 1. Criando o material de Matemática (operação cara)
+        MaterialDidatico matBase = new MaterialDidatico("Apostila Padrão de Matemática", "Matemática");
+        matBase.setAnoLetivo(2024);
+        prototiposCache.put("MAT-2024", matBase);
+
+        // 2. Criando o material de História (operação cara)
+        MaterialDidatico histBase = new MaterialDidatico("Apostila Padrão de História", "História");
+        histBase.setAnoLetivo(2024);
+        prototiposCache.put("HIST-2024", histBase);
+        
+        System.out.println("### Protótipos carregados. ###");
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        // Carrega os protótipos "caros" assim que o sistema inicia
+        carregarPrototipos();
         
         while (true) {
             System.out.println("\n--- Sistema de Gestão Escolar (Demo Padrões) ---");
             System.out.println("1 - Demonstrar Abstract Factory (Montar Kit Didático)");
             System.out.println("2 - Demonstrar Builder (Configurar Turma)");
-            System.out.println("3 - ... (outros padrões)");
+            System.out.println("3 - Demonstrar Factory - Inativo");
+            System.out.println("4 - Demonstrar Prototype (Clonar Material Didático)");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -47,6 +76,10 @@ public class Demo {
                     demonstrarBuilder();
                     break;
                 // ... cases para os outros 22 padrões
+                case 4:
+                    demonstrarPrototype(scanner);
+                    break;
+
                 case 0:
                     System.out.println("Saindo...");
                     scanner.close();
@@ -54,6 +87,39 @@ public class Demo {
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
+        }
+    }
+
+    /**
+     * Método estático para demonstrar o padrão Prototype.
+     * Ele é o "Cliente" do padrão.
+     */
+    private static void demonstrarPrototype(Scanner scanner) {
+        System.out.println("\n### Demonstração: Prototype ###");
+        System.out.println("Vamos criar o material para o novo ano letivo (2025) ");
+        System.out.println("baseado no protótipo de Matemática de 2024.");
+
+        // 1. Pega o protótipo original do cache (operação rápida)
+        MaterialDidatico prototipoMat2024 = prototiposCache.get("MAT-2024");
+        
+        // 2. CLONA o protótipo (operação rápida)
+        // Note: não usamos "new MaterialDidatico()".
+        MaterialDidatico materialMat2025 = prototipoMat2024.clonar();
+
+        // 3. Modifica o clone
+        materialMat2025.setAnoLetivo(2025);
+        materialMat2025.setNome("Apostila Atualizada de Matemática");
+        materialMat2025.adicionarTopico("Tópico 4 - Tópicos de 2025");
+        
+        System.out.println("\n--- Comparação ---");
+        System.out.println("ORIGINAL (2024): " + prototipoMat2024.toString());
+        System.out.println("CLONE (2025):    " + materialMat2025.toString());
+        
+        // Prova de que o original não foi modificado
+        if (prototipoMat2024.getAnoLetivo() == 2024) {
+            System.out.println("\n(SUCESSO: O protótipo original permaneceu intacto!)");
+        } else {
+            System.out.println("\n(FALHA: O protótipo original foi modificado!)");
         }
     }
 
