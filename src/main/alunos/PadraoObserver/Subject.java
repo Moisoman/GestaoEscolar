@@ -1,4 +1,4 @@
-package org.example.alunos;
+package org.example.alunos.PadraoObserver;
 /*
 Observer de alunos
  */

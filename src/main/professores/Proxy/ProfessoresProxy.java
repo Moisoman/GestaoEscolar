@@ -1,4 +1,4 @@
-package org.example.professores;
+package org.example.professores.Proxy;
 
 public class ProfessoresProxy {
     

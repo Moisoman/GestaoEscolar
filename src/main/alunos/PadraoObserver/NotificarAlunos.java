@@ -1,4 +1,4 @@
-package org.example.alunos;
+package org.example.alunos.PadraoObserver;
 
 public class NotificarAlunos implements Observer {
     private String nome;
