@@ -39,7 +39,7 @@ Apostila tem o método getTitulo().
 AplicativoOnline tem o método getUrlAcesso().
 ConcreteProduct (ApostilaCalculo, AplicativoGeometria, ApostilaHistoriaAntiga, AplicativoMapaHistorico):
 As implementações reais dos produtos, criadas pelas fábricas concretas.
-Client (Secretaria ou Main):
+Client (Secretaria ou PadroesDeProjetoMain):
 Utiliza apenas as interfaces MaterialDidaticoFactory, Apostila e AplicativoOnline.
 
 4. Estrutura de Pacotes e Arquivos
@@ -83,8 +83,8 @@ Aqui está como a árvore de diretórios do seu projeto ficaria (assumindo uma e
 
 5. Integração com o Menu Principal
 Como você mencionou no seu plano, a melhor forma de demonstrar é com um menu interativo no console.
-A classe DemoAbstractFactory que eu criei antes era apenas para fins de teste. Agora, vamos integrar essa lógica dentro da sua classe Demo (ou Main) principal, como uma das opções do menu.
-Aqui está o código da sua classe Demo.java (ou Main.java), agora com a opção "1" funcional:
+A classe DemoAbstractFactory que eu criei antes era apenas para fins de teste. Agora, vamos integrar essa lógica dentro da sua classe Demo (ou PadroesDeProjetoMain) principal, como uma das opções do menu.
+Aqui está o código da sua classe Demo.java (ou PadroesDeProjetoMain.java), agora com a opção "1" funcional:
 
 # Builder
 
