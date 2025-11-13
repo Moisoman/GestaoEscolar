@@ -1,7 +1,5 @@
 package org.example.mensalidade.State;
 
-import org.example.entities.interfaces.EstadoBolsa;
-
 public class IntegralBolsaState implements EstadoBolsa {
     @Override
     public void mostrarTipo() {

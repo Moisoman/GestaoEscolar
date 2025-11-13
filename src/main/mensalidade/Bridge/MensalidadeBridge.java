@@ -1,7 +1,6 @@
 package org.example.mensalidade.Bridge;
 
 import org.example.entities.Mensalidade;
-import org.example.entities.interfaces.CalculoMensalidade;
 
 /**
  * Visa desacoplar uma abstração de sua implementação,

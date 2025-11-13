@@ -1,4 +1,4 @@
-package org.example.entities.interfaces;
+package org.example.professores.Proxy;
 
 
 public interface DiretorInterface {

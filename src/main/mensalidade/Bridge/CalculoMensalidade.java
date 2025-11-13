@@ -1,4 +1,4 @@
-package org.example.entities.interfaces;
+package org.example.mensalidade.Bridge;
 
 public interface CalculoMensalidade {
     double calcularMensalidade(double valorBase);

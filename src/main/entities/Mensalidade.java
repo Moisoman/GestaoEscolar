@@ -1,6 +1,6 @@
 package org.example.entities;
 
-import org.example.entities.interfaces.CalculoMensalidade;
+import org.example.mensalidade.Bridge.CalculoMensalidade;
 import org.example.mensalidade.Bridge.ExibicaoMensalidade;
 
 public abstract class Mensalidade {

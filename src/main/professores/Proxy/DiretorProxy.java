@@ -1,9 +1,6 @@
 package org.example.professores.Proxy;
 
-import org.example.calendario.TemplateMethod.CalendarioTemplate;
-import org.example.calendario.TemplateMethod.EventoReuniao;
 import org.example.entities.Diretor;
-import org.example.entities.interfaces.DiretorInterface;
 
 /**
  * Fornece um substituto ou um representante para outro objeto,

@@ -1,7 +1,5 @@
 package org.example.mensalidade.State;
 
-import org.example.entities.interfaces.EstadoBolsa;
-
 /**
  * É usado para os objetos que podem ter diferentes estados,
  * e o comportamento do objeto muda conforme seu estado

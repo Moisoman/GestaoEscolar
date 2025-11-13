@@ -1,7 +1,5 @@
 package org.example.mensalidade.Bridge;
 
-import org.example.entities.interfaces.CalculoMensalidade;
-
 public class CalculoComJuros implements CalculoMensalidade {
     private double juros;
 
