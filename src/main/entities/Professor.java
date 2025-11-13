@@ -1,4 +1,6 @@
 package org.example.entities;
 
-public class Professor {
+public abstract class Professor {
+    public abstract void mostrarInformacoes();
 }
+
