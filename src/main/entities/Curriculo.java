@@ -1,5 +1,7 @@
 package org.example.entities;
 
+import org.example.curriculo.Visitor.CurriculoVisitor;
+
 public class Curriculo {
     private String nomeProfissional;
     private String experienciaProfissional;
@@ -10,6 +12,19 @@ public class Curriculo {
         this.experienciaProfissional = experienciaProfissional;
         this.habilidades = habilidades;
     }
+
+    public String getNomeProfissional() {
+        return nomeProfissional;
+    }
+
+    public String getExperienciaProfissional() {
+        return experienciaProfissional;
+    }
+
+    public String getHabilidades() {
+        return habilidades;
+    }
+
 
     public void atualizarExperiencia(String novaExperiencia) {
         this.experienciaProfissional = novaExperiencia;
@@ -44,6 +59,10 @@ public class Curriculo {
     public void criarExperiencia(String novaExperiencia) {
         this.experienciaProfissional = novaExperiencia;
         System.out.println(nomeProfissional + " adicionou a experiência: " + novaExperiencia);
+    }
+
+    public void aceitar(CurriculoVisitor visitor) {
+        visitor.visitar(this);
     }
 }
 
