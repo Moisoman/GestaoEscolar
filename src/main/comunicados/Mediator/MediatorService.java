@@ -6,9 +6,9 @@ public class MediatorService {
     public static void main(String[] args) {
         EscolaMediator mediador = new EscolaMediator();
 
-        Aluno aluno1 = new Aluno("João", 16, mediador);
-        Aluno aluno2 = new Aluno("Maria", 15, mediador);
-        Aluno aluno3 = new Aluno("Pedro", 17, mediador);
+        Aluno aluno1 = new Aluno("João",  mediador,9);
+        Aluno aluno2 = new Aluno("Maria",  mediador,8);
+        Aluno aluno3 = new Aluno("Pedro",  mediador,7);
 
         mediador.adicionarAluno(aluno1);
         mediador.adicionarAluno(aluno2);
