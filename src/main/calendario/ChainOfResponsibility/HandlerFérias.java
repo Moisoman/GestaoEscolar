@@ -1,6 +1,6 @@
-package org.example.calendario.ChainOfResponsability;
+package org.example.calendario.ChainOfResponsibility;
 
-public class HandlerAlterarData implements CalendarioHandler {
+public class HandlerFérias implements CalendarioHandler {
     private CalendarioHandler nextHandler;
 
     @Override
@@ -10,9 +10,9 @@ public class HandlerAlterarData implements CalendarioHandler {
 
     @Override
     public void processarEvento(String evento) {
-        if (evento.contains("alterar data")) {
-            System.out.println("Processando alteração de data do evento...");
-            System.out.println("Alteração de data feita com sucesso!");
+        if (evento.contains("férias")) {
+            System.out.println("Processando evento de férias...");
+            System.out.println("Evento de férias adicionado com sucesso!");
         } else if (nextHandler != null) {
             nextHandler.processarEvento(evento);
         }
