@@ -1,4 +1,4 @@
-package produtos;
+package org.example.recursos.produtos;
 
 // Pacote: gestaoescolar.recursos.produtos
 // Interface para o Produto A

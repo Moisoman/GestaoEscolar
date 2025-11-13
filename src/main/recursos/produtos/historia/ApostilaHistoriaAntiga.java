@@ -1,6 +1,7 @@
-package produtos.historia;
+package org.example.recursos.produtos.historia;
 
-import produtos.Apostila;
+
+import org.example.recursos.produtos.Apostila;
 
 // Pacote: gestaoescolar.recursos.produtos.historia
 public class ApostilaHistoriaAntiga implements Apostila {

@@ -1,3 +1,5 @@
+package org.example.usuarios;
+
 abstract class Usuario {
     protected String nome;
 

@@ -1,5 +1,5 @@
 // Pacote: gestaoescolar.notas
-package notas;
+package org.example.notas;
 
 /**
  * Target (Alvo): A interface que o nosso novo sistema (Cliente) espera.

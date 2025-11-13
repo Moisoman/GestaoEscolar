@@ -1,6 +1,7 @@
-package produtos.matematica;
+package org.example.recursos.produtos.matematica;
 
-import produtos.AplicativoOnline;
+
+import org.example.recursos.produtos.AplicativoOnline;
 
 // Pacote: gestaoescolar.recursos.produtos.matematica
 public class AplicativoGeometria implements AplicativoOnline {

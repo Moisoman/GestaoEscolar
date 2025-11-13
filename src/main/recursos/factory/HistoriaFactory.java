@@ -1,9 +1,10 @@
-package factory;
+package org.example.recursos.factory;
 
-import produtos.Apostila;
-import produtos.AplicativoOnline;
-import produtos.historia.ApostilaHistoriaAntiga;
-import produtos.historia.AplicativoMapaHistorico;
+
+import org.example.recursos.produtos.AplicativoOnline;
+import org.example.recursos.produtos.Apostila;
+import org.example.recursos.produtos.historia.AplicativoMapaHistorico;
+import org.example.recursos.produtos.historia.ApostilaHistoriaAntiga;
 
 // Fábrica Concreta para História
 public class HistoriaFactory implements MaterialDidaticoFactory {

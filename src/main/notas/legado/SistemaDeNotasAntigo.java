@@ -1,5 +1,5 @@
-// Pacote: gestaoescolar.notas.legado
-package legado;
+
+package org.example.notas.legado;
 
 import java.util.HashMap;
 import java.util.Map;

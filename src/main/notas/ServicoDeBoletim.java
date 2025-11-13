@@ -1,5 +1,5 @@
-// Pacote: gestaoescolar.notas
-package notas;
+
+package org.example.notas;
 
 import java.util.Arrays;
 

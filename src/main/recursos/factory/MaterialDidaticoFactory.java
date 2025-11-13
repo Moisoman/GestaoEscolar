@@ -1,8 +1,8 @@
-package factory;
+package org.example.recursos.factory;
 
-// Pacote: gestaoescolar.recursos.factory
-import produtos.Apostila;
-import produtos.AplicativoOnline;
+import org.example.recursos.produtos.AplicativoOnline;
+import org.example.recursos.produtos.Apostila;
+
 
 // A interface da Abstract Factory
 public interface MaterialDidaticoFactory {

@@ -1,6 +1,7 @@
-package produtos.matematica;
+package org.example.recursos.produtos.matematica;
 
-import produtos.Apostila;
+
+import org.example.recursos.produtos.Apostila;
 
 // Pacote: gestaoescolar.recursos.produtos.matematica
 public class ApostilaCalculo implements Apostila {

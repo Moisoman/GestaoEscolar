@@ -1,4 +1,4 @@
-package model;
+package org.example.recursos.model;
 
 // Pacote: gestaoescolar.recursos.model
 import prototipo.Prototipo;

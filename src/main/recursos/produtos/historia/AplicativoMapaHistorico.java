@@ -1,6 +1,7 @@
-package produtos.historia;
+package org.example.recursos.produtos.historia;
 
-import produtos.AplicativoOnline;
+
+import org.example.recursos.produtos.AplicativoOnline;
 
 // Pacote: gestaoescolar.recursos.produtos.historia
 public class AplicativoMapaHistorico implements AplicativoOnline {

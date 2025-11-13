@@ -1,8 +1,8 @@
 
-// Pacote: gestaoescolar.notas
-package notas;
+package org.example.notas;
 
-import legado.SistemaDeNotasAntigo; // Importa o legado
+import org.example.notas.legado.SistemaDeNotasAntigo;
+
 import java.util.Map;
 
 /**
