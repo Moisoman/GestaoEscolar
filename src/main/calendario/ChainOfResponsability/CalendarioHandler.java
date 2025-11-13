@@ -1,4 +1,4 @@
-package org.example.calendario;
+package org.example.calendario.ChainOfResponsability;
 
 public interface CalendarioHandler {
     void setNextHandler(CalendarioHandler handler);

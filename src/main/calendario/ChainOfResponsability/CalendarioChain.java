@@ -1,4 +1,4 @@
-package org.example.calendario;
+package org.example.calendario.ChainOfResponsability;
 
 public class CalendarioChain {
     public static void main(String[] args) {
