@@ -5,8 +5,8 @@ import org.example.entities.interfaces.CalculoMensalidade;
 
 /**
  * Visa desacoplar uma abstração de sua implementação,
- * permitindo que ambas evoluam independentemente
- * Separar a interface do concreto
+ * permitindo que ambas evoluam independentemente.
+ * Separar a abstração do concreto
  */
 public class MensalidadeBridge extends Mensalidade {
     private double valorBase;

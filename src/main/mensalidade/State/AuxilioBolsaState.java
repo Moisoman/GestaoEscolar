@@ -1,0 +1,15 @@
+package org.example.mensalidade.State;
+
+import org.example.entities.interfaces.EstadoBolsa;
+
+public class AuxilioBolsaState implements EstadoBolsa {
+    @Override
+    public void mostrarTipo() {
+        System.out.println("Bolsa Remuneração: Auxílio para alunos estrangeiros (valor parcial para custos adicionais)");
+    }
+
+    @Override
+    public double calcularValorBolsa() {
+        return 300;
+    }
+}
