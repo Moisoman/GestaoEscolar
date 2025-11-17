@@ -1,5 +1,5 @@
 // Pacote: gestaoescolar.matricula.subsistema
-package main.matricula.facade.subsistema;
+package org.example.matricula.facade.subsistema;
 
 /**
  * Parte 1 do Subsistema: Cadastro

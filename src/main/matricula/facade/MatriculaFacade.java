@@ -1,9 +1,9 @@
-package main.matricula.facade;
+package org.example.matricula.facade;
 
 
-import matricula.facade.subsistema.ServicoCadastro;
-import matricula.facade.subsistema.ServicoDeTurmas;
-import matricula.facade.subsistema.ServicoFinanceiro;
+import org.example.matricula.facade.subsistema.ServicoCadastro;
+import org.example.matricula.facade.subsistema.ServicoDeTurmas;
+import org.example.matricula.facade.subsistema.ServicoFinanceiro;
 
 /**
  * Facade (Fachada)

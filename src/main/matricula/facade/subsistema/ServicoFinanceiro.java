@@ -1,4 +1,4 @@
-package main.matricula.facade.subsistema;
+package org.example.matricula.facade.subsistema;
 
 /**
  * Parte 3 do Subsistema: Financeiro
