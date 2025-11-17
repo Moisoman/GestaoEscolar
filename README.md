@@ -213,3 +213,29 @@ Adapter (AdaptadorDeNotasLegado): A classe "tradutora".
 implements FonteDeNotas
 private SistemaDeNotasAntigo sistemaAntigo; (contém o adaptado)
 No método getNotas(), ele chama sistemaAntigo.buscarNotasLegado() e traduz o resultado.
+
+# Facade
+Vamos usá-lo para simplificar o processo de matrícula.
+
+O objetivo do Facade (Fachada) é fornecer uma interface unificada e simplificada para um conjunto de interfaces de um subsistema complexo. Ele é como um "balcão de atendimento".
+
+1. Padrão: Facade (Fachada)
+Nome: Facade
+Propósito: Fornecer uma interface simplificada para um subsistema complexo. Em vez de o cliente ter que interagir com 5 ou 6 classes diferentes para realizar uma tarefa, ele interage apenas com uma (a fachada), que coordena o trabalho internamente.
+
+2. Motivação (Problema / Solução)
+Problema (Contexto: Gestão Escolar): O processo de matricular um novo aluno é muito complexo. Um atendente da secretaria (o cliente) precisaria, manualmente, interagir com vários módulos do sistema na ordem correta:
+Acessar o ServicoCadastro para verificar se o CPF do aluno já existe.
+Acessar o ServicoDeTurmas para verificar se há vagas na turma "101-A".
+Acessar o ServicoFinanceiro para gerar o boleto da taxa de matrícula.
+Acessar o ServicoCadastro novamente para, enfim, salvar o aluno.
+Acessar o ServicoDeTurmas novamente para alocar o aluno na vaga.
+Isso é complicado, propenso a erros (e se o atendente esquecer o passo 3?) e acopla fortemente o atendente a toda a lógica interna do sistema.
+Solução (Usando Facade): Criamos uma classe MatriculaFacade. O atendente da secretaria agora só precisa fazer uma chamada: facade.matricularAluno("João Silva", "123.456.789-00", "101-A");
+A classe MatriculaFacade (a fachada) fará, internamente, todas as 5 chamadas aos subsistemas na ordem correta, tratando o fluxo. O atendente não precisa mais saber como o processo funciona, apenas o que ele quer fazer.
+
+3. Estrutura (Diagrama UML)
+Client (Demo): A classe que precisa realizar a matrícula (ex: a secretaria).
+Facade (MatriculaFacade): A classe que simplifica o acesso.
+Método: matricularAluno(...)
+Subsystem Classes (ServicoCadastro, ServicoDeTurmas, ServicoFinanceiro): As classes complexas do sistema. Elas não fazem ideia de que a fachada existe; elas apenas executam seu trabalho.
