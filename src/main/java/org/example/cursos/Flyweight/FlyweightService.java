@@ -1,8 +1,8 @@
 package java.org.example.cursos.Flyweight;
 
-import org.example.entities.Curso;
-import org.example.entities.ProfessorCoordenador;
-import org.example.entities.Turma;
+import java.org.example.entities.Curso;
+import java.org.example.entities.ProfessorCoordenador;
+import java.org.example.entities.Turma;
 
 public class FlyweightService {
     public static void main(String[] args) {

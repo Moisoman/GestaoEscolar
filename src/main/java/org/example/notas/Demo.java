@@ -2,6 +2,7 @@
 package java.org.example.notas;
 
 
+import java.org.example.alunos.repositorio.RegistroAlunos;
 import java.org.example.recursos.factory.HistoriaFactory;
 import java.org.example.recursos.factory.MatematicaFactory;
 import java.org.example.recursos.factory.MaterialDidaticoFactory;
@@ -9,6 +10,7 @@ import java.org.example.recursos.model.MaterialDidatico;
 import java.org.example.recursos.produtos.AplicativoOnline;
 import java.org.example.recursos.produtos.Apostila;
 
+import java.org.example.turmas.TurmasBuilder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -179,7 +181,7 @@ public class Demo {
         // --- Cenário 1: Turma de TI (completa) ---
         // O cliente usa a interface fluente do Builder
         System.out.println("\nConstruindo Turma de TI (Completa)...");
-        turmas.TurmasBuilder turmaTI = new turmas.TurmasBuilder.TurmaBuilder("TADS-2024", 2024)
+        TurmasBuilder turmaTI = new TurmasBuilder.TurmaBuilder("TADS-2024", 2024)
                 .comTurno("NOITE")
                 .comSala("C-301")
                 .comDisciplina("Programação Orientada a Objetos")
@@ -192,7 +194,7 @@ public class Demo {
         // --- Cenário 2: Turma de Pedagogia (mínima) ---
         // Note que o cliente não precisa se preocupar com os campos nulos.
         System.out.println("\nConstruindo Turma de Pedagogia (Mínima)...");
-        turmas.TurmasBuilder turmaPedagogia = new turmas.TurmasBuilder.TurmaBuilder("PED-2024", 2024)
+        TurmasBuilder turmaPedagogia = new TurmasBuilder.TurmaBuilder("PED-2024", 2024)
                 .comTurno("MANHA")
                 // Sem sala definida intencionalmente
                 .comDisciplina("Didática Geral")
@@ -203,7 +205,7 @@ public class Demo {
         // --- Cenário 3: Tentativa de falha (Validação) ---
         System.out.println("\nTentando construir Turma sem disciplina (Deve falhar)...");
         try {
-            turmas.TurmasBuilder turmaFantasma = new turmas.TurmasBuilder.TurmaBuilder("FANTASMA-2024", 2024)
+            TurmasBuilder turmaFantasma = new TurmasBuilder.TurmaBuilder("FANTASMA-2024", 2024)
                     .comTurno("NOITE")
                     .comSala("A-100")
                     .build(); // <- Esta linha vai lançar uma exceção
@@ -226,22 +228,22 @@ public class Demo {
         
         System.out.println("Acessando o registro central e adicionando 'Carlos'...");
         // Pega a instância global e usa.
-        repositorio.RegistroAlunos.getInstance().adicionarAluno("Carlos (adicionado na 1ª chamada)");
+        RegistroAlunos.getInstance().adicionarAluno("Carlos (adicionado na 1ª chamada)");
 
         System.out.println("\nAcessando o registro NOVAMENTE e adicionando 'Ana'...");
         // Pega a instância de novo (é a mesma) e usa.
-        repositorio.RegistroAlunos.getInstance().adicionarAluno("Ana (adicionada na 2ª chamada)");
+        RegistroAlunos.getInstance().adicionarAluno("Ana (adicionada na 2ª chamada)");
 
         System.out.println("\n--- Prova de que o estado foi mantido ---");
         System.out.println("Listando todos os alunos da MESMA instância:");
         
         // Pega a instância uma terceira vez e lista.
         // Ele deve listar "Carlos" E "Ana", provando que o estado é global.
-        repositorio.RegistroAlunos.getInstance().listarAlunos();
+        RegistroAlunos.getInstance().listarAlunos();
 
         // Prova de que as instâncias são as mesmas (opcional, mas bom)
-        repositorio.RegistroAlunos r1 = repositorio.RegistroAlunos.getInstance();
-        repositorio.RegistroAlunos r2 = repositorio.RegistroAlunos.getInstance();
+        RegistroAlunos r1 = RegistroAlunos.getInstance();
+        RegistroAlunos r2 = RegistroAlunos.getInstance();
         System.out.println("\nProva de Hash: " + r1.hashCode() + " é igual a " + r2.hashCode());
     }
 
