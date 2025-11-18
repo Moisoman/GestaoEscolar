@@ -1,6 +1,6 @@
 
 // Pacote: gestaoescolar.alunos.repositorio
-package java.org.example.alunos.repositorio.;
+package java.org.example.alunos.repositorio;
 
 import java.util.ArrayList;
 import java.util.List;
