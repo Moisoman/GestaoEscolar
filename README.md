@@ -274,3 +274,28 @@ Mantém uma referência (protected Avaliacao avaliacaoBase) ao Component que ela
 ConcreteDecorator (NotaBonusComportamento, NotaBonusAtividadeExtra):
 Estendem NotaDecorator.
 Sobrescrevem calcularNota() para adicionar sua própria lógica além de chamar avaliacaoBase.calcularNota().
+
+# Interpreter
+Para o nosso Sistema de Gestão Escolar, não há aplicação melhor do que a que sugeri na nossa análise inicial: criar um motor de regras flexível para aprovação de alunos. Em vez de ter o cálculo da média "chumbado" (hard-coded) em Java, o Interpreter nos permite definir a regra de média como uma "frase".
+
+1. Padrão: Interpreter (Interpretador)
+Nome: Interpreter
+Propósito: Dada uma linguagem, definir uma representação para sua gramática (uma árvore de classes) e um interpretador (um método em cada classe) que usa essa representação para interpretar "frases" da linguagem.
+
+2. Motivação (Problema / Solução)
+Problema (Contexto: Gestão Escolar): A regra de aprovação de alunos muda.
+Um curso pode usar uma média simples: (P1 + P2) / 2
+Outro curso pode usar uma média ponderada: (P1 * 0.4) + (P2 * 0.6)
+Um terceiro pode incluir um trabalho: (P1 + P2 + TRABALHO) / 3
+Se você programar isso com if/else ou classes de Strategy (que também é uma solução válida), você ainda está preso ao código Java. Se a escola quiser criar uma regra nova (ex: P1 * 0.3 + P2 * 0.3 + TRABALHO * 0.4), um programador teria que alterar, compilar e reimplantar o sistema.
+Solução (Usando Interpreter): Definimos uma "linguagem" para fórmulas matemáticas. Criamos classes que representam os elementos dessa linguagem:
+Expressão (Interface): Expressao (define interpretar())
+Expressões Terminais (Dados): NumeroExpressao (ex: 0.4), VariavelExpressao (ex: "P1")
+Expressões Não-Terminais (Operações): SomaExpressao, MultiplicacaoExpressao, DivisaoExpressao
+Agora, a regra (P1 * 0.4) + (P2 * 0.6) não é código Java, mas sim uma árvore de objetos (uma Abstract Syntax Tree, ou AST) que construímos em tempo de execução. O cliente (a escola) pode montar a fórmula que quiser, e o nosso interpretador irá calculá-la.
+
+3. Estrutura (Diagrama UML)
+Context (ContextoAvaliacao): Armazena o valor das variáveis (ex: "P1" = 8.0, "P2" = 7.0). É passado para o interpretador.
+AbstractExpression (Expressao): A interface que declara o método interpretar(ContextoAvaliacao contexto) : double.
+TerminalExpression (NumeroExpressao, VariavelExpressao): Implementam Expressao. São os "pontos finais" da árvore.
+NonTerminalExpression (SomaExpressao, MultiplicacaoExpressao...): Implementam Expressao. Elas contêm outras Expressao (ex: esq e dir) e definem como combiná-las.
