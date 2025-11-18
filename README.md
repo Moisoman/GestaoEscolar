@@ -239,3 +239,38 @@ Client (Demo): A classe que precisa realizar a matrícula (ex: a secretaria).
 Facade (MatriculaFacade): A classe que simplifica o acesso.
 Método: matricularAluno(...)
 Subsystem Classes (ServicoCadastro, ServicoDeTurmas, ServicoFinanceiro): As classes complexas do sistema. Elas não fazem ideia de que a fachada existe; elas apenas executam seu trabalho.
+
+# Decorator
+
+Este padrão se encaixa perfeitamente no seu plano original: "3. Gestão de Notas e Avaliações", para "adicionar funcionalidades extras ao cálculo de notas, como bônus por comportamento ou atividades extracurriculares."
+
+O objetivo do Decorator é anexar responsabilidades (funcionalidades) adicionais a um objeto dinamicamente. Ele fornece uma alternativa flexível à herança para estender a funcionalidade. Pense nele como "embrulhar um presente com várias camadas de papel".
+
+1. Padrão: Decorator (Decorador)
+Nome: Decorator (ou Wrapper)
+Propósito: Permitir que funcionalidades sejam adicionadas a um objeto dinamicamente, em tempo de execução, sem alterar sua estrutura. Os decoradores "envolvem" o objeto original, mantendo a mesma interface.
+
+2. Motivação (Problema / Solução)
+Problema (Contexto: Gestão Escolar): Você tem uma classe NotaBase que simplesmente armazena a nota de uma prova (ex: 8.0). Agora, a escola decide que alguns alunos podem ganhar bônus:
++0.5 por bom comportamento.
++1.0 por participar de atividades extracurriculares.
++0.7 por participação em sala.
+Como implementar isso?
+Usando Herança? Você teria que criar classes para todas as combinações: NotaComComportamento, NotaComAtividadeExtra, NotaComComportamentoEAtividadeExtra, NotaComComportamentoEAtividadeEParticipacao... Isso é uma explosão de classes e é totalmente inflexível. E se o bônus de comportamento for aplicado duas vezes?
+Solução (Usando Decorator):
+Criamos uma interface comum, Avaliacao, com um método calcularNota().
+A NotaBase implementa Avaliacao e retorna a nota simples (ex: 8.0).
+Criamos "decoradores" que também implementam Avaliacao. Cada decorador (ex: NotaBonusComportamento) "envolve" (contém uma referência) outro objeto Avaliacao.
+Quando você chama calcularNota() no decorador, ele primeiro chama o calcularNota() do objeto que ele está envolvendo (ex: 8.0) e, em seguida, adiciona seu bônus ao resultado (ex: 8.0 + 0.5 = 8.5).
+Isso permite "empilhar" os bônus em qualquer ordem ou combinação: Avaliacao notaFinal = new NotaBonusAtividadeExtra( new NotaBonusComportamento( new NotaBase(8.0) ) ); notaFinal.calcularNota(); // Retornará 8.0 + 0.5 + 1.0 = 9.5
+
+3. Estrutura (Diagrama UML)
+Component (Avaliacao): A interface comum para o objeto e seus decoradores.
+Método: calcularNota(): double
+ConcreteComponent (NotaBase): A classe base que será decorada.
+Implementa Avaliacao.
+Decorator (NotaDecorator): Classe abstrata que também implementa Avaliacao.
+Mantém uma referência (protected Avaliacao avaliacaoBase) ao Component que ela envolve.
+ConcreteDecorator (NotaBonusComportamento, NotaBonusAtividadeExtra):
+Estendem NotaDecorator.
+Sobrescrevem calcularNota() para adicionar sua própria lógica além de chamar avaliacaoBase.calcularNota().
